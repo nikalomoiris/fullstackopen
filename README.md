@@ -1,0 +1,1 @@
+This repository contains the exercises solutions of the [Full Stack Open 2019](https://fullstackopen.com/en) course.
