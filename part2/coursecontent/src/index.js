@@ -32,7 +32,7 @@ const Content = ({ parts }) => {
 }
 
 const Total = ({ parts }) => {
-    let total = parts
+    const total = parts
                     .map(part => part.exercises)
                     .reduce((total, amount) => total + amount, 0);
     return (
