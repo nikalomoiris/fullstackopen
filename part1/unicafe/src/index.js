@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const Statistic = ({ text, value }) => {
+    return (
+        <p>{text}: {value}</p>
+    )
+}
+
 const Statistics = ({ good, neutral, bad, totalFeedback, averageFeedbaack, positivePercentage }) => {
     if (totalFeedback === 0) {
         return (
-            <>
-                <h1>statistics</h1>
-                <p>No feedback given</p>
-            </>
+            <p>No feedback given</p>
         );
     }
     return (
         <>
-            <h1>statistics</h1>
-            <p>good: {good}</p>
-            <p>neutral: {neutral}</p>
-            <p>bad: {bad}</p>
-            <p>all: {totalFeedback}</p>
-            <p>average: {averageFeedbaack}</p>
-            <p>positive: {positivePercentage}%</p>
+            <Statistic text="good" value={good} />
+            <Statistic text="neutral" value={neutral} />
+            <Statistic text="bad" value={bad} />
+            <Statistic text="all" value={totalFeedback} />
+            <Statistic text="average" value={averageFeedbaack} />
+            <Statistic text="positive" value={positivePercentage} />
         </>
+    )
+}
+
+const Button = ({ func, text }) => {
+    return (
+        <button onClick={func}>{text}</button>
     )
 }
 
@@ -50,16 +58,16 @@ const App = () => {
 
     const positivePercentage = () => {
         return (
-            (good / totalFeedback()) * 100
+            (good / totalFeedback()) * 100 + '%'
         );
     }
 
     return (
         <div>
             <h1>give feedback</h1>
-            <button onClick={() => goodFeedback()}>good</button>
-            <button onClick={() => neutralFeedback()}>neutral</button>
-            <button onClick={() => badFeedback()}>bad</button>
+            <Button func={() => goodFeedback()} text="good" />
+            <Button func={() => neutralFeedback()} text="neutral" />
+            <Button func={() => badFeedback()} text="bad" />
             <h1>statistics</h1>
             <Statistics good={good}
                         neutral={neutral}
