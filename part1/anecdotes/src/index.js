@@ -9,14 +9,24 @@ const Button = ({ func, text }) => {
 
 const App = (props) => {
     const [selected, setSelected] = useState(0);
+    const [votes, setVotes] = useState(new Array(6).fill(0));
 
     const randomSelect = (max) => {
         setSelected(Math.floor(Math.random() * Math.floor(max)));
+        console.log(votes);
+    }
+
+    const castVote = () => {
+        const copy = [...votes];
+        copy[selected] += 1;
+        setVotes(copy);
     }
 
     return (
         <div>
-            {props.anecdotes[selected]}<br />
+            {props.anecdotes[selected]}
+            <p>has {votes[selected]} votes</p>
+            <Button func={() => castVote()} text='vote' />
             <Button func={() => randomSelect(anecdotes.length)} text='Random Quote' />
         </div>
     )
