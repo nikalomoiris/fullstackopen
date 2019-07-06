@@ -11,6 +11,32 @@ const Filter = ({ filter, handleFilterChange }) => {
 }
 
 const Country = ({ country }) => {
+  const [weather, setWeather] = useState(
+    {
+      current: {
+        temp_c: 0,
+        wind_kph: 0,
+        wind_dir: "N",
+        condition: {
+          icon: "//cdn.apixu.com/weather/64x64/night/296.png"
+        }
+      }
+    }
+  );
+  const WEATHER_API_KEY = '8c434935e94847609d9222919190607';
+  const CAPITAL = country.capital;
+
+  useEffect(() => {
+    const URL = 'http://api.apixu.com/v1/current.json?key=' + WEATHER_API_KEY + '&q=' + CAPITAL;
+    console.log('weather effect');
+    axios
+      .get(URL)
+      .then((response) => {
+        console.log("wether promise fulfilled");
+        setWeather(response.data);
+      })
+  }, [CAPITAL]);
+
   return (
     <>
       <h1>{country.name}</h1>
@@ -21,6 +47,10 @@ const Country = ({ country }) => {
         {country.languages.map(language => <li key={language.iso639_1}>{language.name}</li>)}
       </ul>
       <img src={country.flag} alt="flag" style={{ maxWidth: 150 }} />
+      <h2>Weather in {country.capital}</h2>
+      <p><strong>temperature:</strong> {weather.current.temp_c} Celsius</p>
+      <img src={weather.current.condition.icon} alt="condition icon" />
+      <p><strong>wind:</strong> {weather.current.wind_kph} kph direction {weather.current.wind_dir}</p>
     </>
   );
 }
