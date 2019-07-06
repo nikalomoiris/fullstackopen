@@ -25,7 +25,7 @@ const Country = ({ country }) => {
   );
 }
 
-const Countries = ({ countries }) => {
+const Countries = ({ countries, handleClick }) => {
   if (countries.length < 1) {
     return (
       <p>No country matches the search term</p>
@@ -37,7 +37,7 @@ const Countries = ({ countries }) => {
   } else if (countries.length < 10) {
     return (
       countries.map(country =>
-        <li key={country.alpha3Code}>{country.name}</li>)
+        <li key={country.alpha3Code}>{country.name}<button key={country.alpha2Code} onClick={() => handleClick(country.name)}>show</button></li>)
     );
   } else {
     return (
@@ -65,11 +65,16 @@ const App = () => {
     setFilter(event.target.value);
   }
 
+  const handleClick = (country) => {
+    setFilter(country);
+  }
+
   return (
     <div>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <Countries countries={countries.filter(country =>
-              country.name.toLowerCase().includes(filter.toLowerCase()))} />
+        country.name.toLowerCase().includes(filter.toLowerCase()))}
+        handleClick={handleClick}/>
     </div>
   )
 }
