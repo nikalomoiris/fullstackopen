@@ -27,7 +27,7 @@ const Country = ({ country }) => {
   const CAPITAL = country.capital;
 
   useEffect(() => {
-    const URL = 'http://api.apixu.com/v1/current.json?key=' + WEATHER_API_KEY + '&q=' + CAPITAL;
+    const URL = `http://api.apixu.com/v1/current.json?key=${WEATHER_API_KEY}&q=${CAPITAL}`;
     console.log('weather effect');
     axios
       .get(URL)
