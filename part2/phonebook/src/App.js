@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import personsService from './services/dbpersons';
 
 const Number = ({ person }) => {
   return <p>{person.name}: {person.phone}</p>
@@ -41,19 +41,16 @@ const Filter = ({ filter, handleFilterChange }) => {
 
 const App = () => {
 
-  const [ persons, setPersons ] = useState([]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    console.log("effect");
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled', response.data);
-        setPersons(response.data);
-      })
+    personsService.getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons);
+      });
   }, []);
 
   const handleNameChange = (event) => {
@@ -76,13 +73,10 @@ const App = () => {
     }
 
     if (persons.map(person => person.name).indexOf(newNumber.name) < 0) {
-      console.log('Trying to store to the db');
-      axios
-        .post('http://localhost:3001/persons', newNumber)
-        .then(response => {
-          console.log('Response from the db server', response);
-          setPersons(persons.concat(response.data));
-        })
+      personsService.create(newNumber)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson));
+        });
     } else {
       alert('The name provided is already in the phonebook');
     }
