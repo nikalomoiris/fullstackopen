@@ -76,7 +76,13 @@ const App = () => {
     }
 
     if (persons.map(person => person.name).indexOf(newNumber.name) < 0) {
-      setPersons(persons.concat(newNumber));
+      console.log('Trying to store to the db');
+      axios
+        .post('http://localhost:3001/persons', newNumber)
+        .then(response => {
+          console.log('Response from the db server', response);
+          setPersons(persons.concat(response.data));
+        })
     } else {
       alert('The name provided is already in the phonebook');
     }
