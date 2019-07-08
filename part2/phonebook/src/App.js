@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import personsService from './services/dbpersons';
 
-const Number = ({ person }) => {
-  return <p>{person.name}: {person.phone}</p>
+const Number = ({ person, handleDelete }) => {
+  return (
+    <p>
+      {person.name}: {person.phone}
+      <button id={person.id} onClick={handleDelete}>delete</button>
+    </p>
+  );
 }
 
-const Numbers = ({ persons }) => {
+const Numbers = ({ persons, handleDelete }) => {
   return (
-    persons.map((person) => <Number key={person.name} person={person} />)
+    persons.map((person) => <Number key={person.name} person={person} handleDelete={handleDelete} />)
   );
 }
 
@@ -65,6 +70,15 @@ const App = () => {
     setFilter(event.target.value);
   }
 
+  const handleDelete = (event) => {
+    const id = event.target.id;
+    console.log(id);
+    personsService.deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id != id));
+      })
+  }
+
   const addNumber = (event) => {
     event.preventDefault();
     const newNumber = {
@@ -95,7 +109,7 @@ const App = () => {
       <h2>Numbers</h2>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <Numbers persons={persons.filter(person =>
-        person.name.toLowerCase().includes(filter.toLowerCase()))} />
+        person.name.toLowerCase().includes(filter.toLowerCase()))} handleDelete={handleDelete} />
     </div>
   );
 }

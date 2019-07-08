@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "phone": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "phone": "39-44-5323523",
       "id": 2
@@ -29,21 +24,6 @@
       "name": "georgia",
       "phone": "33325",
       "id": 5
-    },
-    {
-      "name": "piii",
-      "phone": "323",
-      "id": 6
-    },
-    {
-      "name": "psichopii",
-      "phone": "099848",
-      "id": 7
-    },
-    {
-      "name": "nikk",
-      "phone": "333",
-      "id": 8
     },
     {
       "name": "dfdok",
